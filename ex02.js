@@ -1,3 +1,4 @@
+/*
 function upperCase(str = "") {
   return str
     .split("")
@@ -9,8 +10,21 @@ function upperCase(str = "") {
     })
     .join("");
 }
-
+*/
+function upperCase(str = "") {
+  let newStr = "";
+  let i = 0;
+  while (str[i]) {
+    let ascii = str.charCodeAt(i);
+    if (ascii >= 97 && ascii <= 122) {
+      newStr += String.fromCharCode(ascii - 32);
+    } else {
+      newStr += str[i];
+    }
+    ++i;
+  }
+  return newStr;
+}
 let str = "hello";
 
-console.log(str);
 console.log(upperCase(str));

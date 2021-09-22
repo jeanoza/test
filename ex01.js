@@ -1,18 +1,4 @@
-// function lowerCase(str = "") {
-//   array = str.split("");
-//   console.log(array);
-//   for (let i = 0; i < str.length; ++i) {
-//     let ascii = str[i].charCodeAt();
-//     if (ascii >= 65 && ascii <= 90) {
-//       ascii += 32;
-//       array[i] = String.fromCharCode(ascii);
-//     } else {
-//       array[i] = str[i];
-//     }
-//   }
-//   return array.join("");
-// }
-
+/*
 function lowerCase(str = "") {
   return str
     .split("")
@@ -23,6 +9,21 @@ function lowerCase(str = "") {
         : String.fromCharCode(ascii);
     })
     .join("");
+}
+*/
+function lowerCase(str = "") {
+  let newStr = "";
+  let i = 0;
+  while (str[i]) {
+    let ascii = str.charCodeAt(i);
+    if (ascii >= 65 && ascii <= 90) {
+      newStr += String.fromCharCode(ascii + 32);
+    } else {
+      newStr += str[i];
+    }
+    ++i;
+  }
+  return newStr;
 }
 
 let str = "HELLo";

@@ -1,7 +1,6 @@
 function length(str = "") {
-  const arr = str.split("");
   let count = 0;
-  while (arr[count]) {
+  while (str[count]) {
     ++count;
   }
   return count;

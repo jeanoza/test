@@ -1,28 +1,34 @@
+/**
+ * kebabCase
+ * @param {string} str
+ * @returns {string}
+ */
 function kebabCase(str = "") {
-  return str
-    .split("")
-    .map((char, index) => {
-      let char_current = char.charCodeAt();
-      let char_prev = str[index - 1]?.charCodeAt();
-      let char_groupe = isPrintable(char_current);
+  let result = "";
 
-      if (char_groupe !== "upper" && char_groupe !== "lower") {
-        if (char_groupe === "space") return "-";
-        return;
+  for (let i = 0; str[i]; ++i) {
+    let ascii = str.charCodeAt(i);
+    let ascii_previous = str.charCodeAt(i - 1);
+
+    if (ascii === 32) {
+      result += "-";
+    } else if (type(ascii) === "upper") {
+      if (i !== 0 && ascii_previous !== 45) {
+        result += "-";
       }
-      if (char_groupe === "upper") {
-        return isPrintable(char_prev) === "lower"
-          ? `-${String.fromCharCode(char_current + 32)}`
-          : String.fromCharCode(char_current + 32);
-      }
-      return char;
-    })
-    .join("");
+      result += String.fromCharCode(ascii + 32);
+    } else if (ascii === 45 && (i === 0 || i === str.length - 1)) {
+      result += "";
+    } else {
+      result += str[i];
+    }
+  }
+  return result;
 }
 
 const ex1 = "love one code";
 const ex2 = "LoveOneCode";
-const ex3 = "-Love One Code-";
+const ex3 = "-Love-One-Code-";
 console.log(ex1, ":", kebabCase(ex1));
 console.log(ex2, ":", kebabCase(ex2));
 console.log(ex3, ":", kebabCase(ex3));
@@ -31,7 +37,7 @@ console.log(ex3, ":", kebabCase(ex3));
  * @param {number} ascii
  * @returns {string || boolean}
  */
-function isPrintable(ascii) {
+function type(ascii) {
   if (ascii >= 65 && ascii <= 90) return "upper";
   else if (ascii >= 97 && ascii <= 122) return "lower";
   else if (ascii === 32) return "space";

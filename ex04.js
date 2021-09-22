@@ -1,51 +1,42 @@
+/**
+ * TODO:modifier avec cette condition
+ * @param {string} str
+ * @param {boolean} restToLoweropt : true => only first character is majuscule
+ * @returns {string}
+ */
+
 function capitalize(str = "", restToLoweropt = false) {
-  let result;
-
-  if (restToLoweropt) {
-    result = lowerCase(str);
-  } else {
-    result = str;
+  let newStr = "";
+  for (let i = 0; str[i] !== undefined; ++i) {
+    let ascii = str.charCodeAt(i);
+    let previousAscii = str.charCodeAt(i - 1);
+    if (
+      asciiType(ascii) === "lower" &&
+      (i === 0 || asciiType(previousAscii) === "space")
+    ) {
+      newStr += String.fromCharCode(ascii - 32);
+    } else if (i !== 0 && asciiType(ascii) === "upper" && restToLoweropt) {
+      newStr += String.fromCharCode(ascii + 32);
+    } else {
+      newStr += str[i];
+    }
   }
-  return result
-    .split("")
-    .map((char, index) => {
-      let char_current = char.charCodeAt();
-      let char_prev = str[index - 1]?.charCodeAt();
-
-      if (
-        (index === 0 || isPrintable(char_prev) === "space") &&
-        isPrintable(char_current) === "lower"
-      ) {
-        return String.fromCharCode(char.charCodeAt() - 32);
-      }
-      return char;
-    })
-    .join("");
+  return newStr;
 }
 /**
  * @param {number} ascii
  * @returns {string || boolean}
  */
-function isPrintable(ascii) {
+function asciiType(ascii) {
   if (ascii >= 65 && ascii <= 90) return "upper";
   else if (ascii >= 97 && ascii <= 122) return "lower";
   else if (ascii === 32) return "space";
   return false;
 }
 
-function lowerCase(str = "") {
-  return str
-    .split("")
-    .map((alpha) => {
-      const ascii = alpha.charCodeAt();
-      return ascii >= 65 && ascii <= 90
-        ? String.fromCharCode(ascii + 32)
-        : String.fromCharCode(ascii);
-    })
-    .join("");
-}
-
-console.log(capitalize("He llo"));
-console.log(capitalize("he Llo"));
-console.log(capitalize("he LLo(true)", true));
-console.log(capitalize("he LLo(false)"));
+const ex01 = "one code";
+const ex02 = "one Code";
+const ex03 = "One CODE";
+console.log(ex01, "=>", capitalize(ex01));
+console.log(ex02, "=>", capitalize(ex02));
+console.log(ex03, "(with true)=>", capitalize(ex03, true));
